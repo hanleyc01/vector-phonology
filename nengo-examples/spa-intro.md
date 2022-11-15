@@ -22,11 +22,7 @@ Notes are taken from [here](https://www.nengo.ai/nengo-spa/v1.3.0/user-guide/spa
 -   The specific opoerations by SPA usually use random vectors of unit-length, and three basic operations
     1.  *Superposition*: Two vectors $\vec{v}$ and $\vec{w}$ can be combined in a union-like operation by simple addition as $\vec{u} = \vec{v} + \vec{w}$. The resulting vector will be similar to both of the original vectors.
 
-    2.  *Binding*: The binding has to produce a vector that is dissimilar to both the original vectors and allows to recover on eof the original vectors given the other one. Circular convolution for this purpose is defined as:
-    $$
-    \vec{u} = \vec{v} \circledast \vec{w} \space : u_i = \sum^{D}_{j=1} v_j w_{(i-j)\space mod \space D}
-    $$
-        where $D$ is the dimensionality of the vectors.
+    2.  *Binding*: The binding has to produce a vector that is dissimilar to both the original vectors and allows to recover on eof the original vectors given the other one. Circular convolution for this purpose is defined as: $\vec{u} = \vec{v} \circledast \vec{w} \space : u_i = \sum^{D}_{j=1} v_j w_{(i-j)\space mod \space D}$, where $D$ is the dimensionality of the vectors.
 
     3.  *Unbinding*: To unbind a vector from a circular convolution, another circular convolution with the approximate inverse of one of the vectors can be used: $\vec{v} \approx \vec{u} \circledast \vec{w}^+$. The approximate inverse is given by reordering the vector components:
 
