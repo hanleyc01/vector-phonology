@@ -1,5 +1,5 @@
 from typing import Optional, TypedDict
-from ipaparser import IPA, IPASymbol # type: ignore
+import numpy as np
 
 class Major(TypedDict):
     """
@@ -30,7 +30,7 @@ class Laryngeal(TypedDict):
     spr_gl: float
     cons_gl: float
     
-class Place:
+class Place(TypedDict):
     """
     Place class features are represented by a balanced ternary, some
     number, paradigmatically a whole number, within the inclusive range
@@ -53,20 +53,25 @@ class Sound(TypedDict):
     `list[Laryngeal]` features, `list[Place]` features, and
     `aux`, which is for any features that do not fit into the other sets
     """
-    major_class: list[Major]
-    laryngeal: list[Laryngeal]
-    place: list[Place]
-    aux: None
+    major: Major
+    laryngeal: Laryngeal
+    place: Place
     
-if __name__ == '__main__':
-    i: Major = {
-        'syll': 1,
-        'cons': -0,
-        'son': 1,
-        'contin': 1,
-        'del_rel': -1,
-        'lat': -1,
-        'nas': 0,
-        'stri': -1
-        }
-    print(list(i.values()))
+class SArray:
+    """
+    Class which encapsulates a `Sound` in the form of `np.ndarrays`
+    """
+    major: np.ndarray
+    laryngeal: np.ndarray
+    place: np.ndarray
+    
+    def __init__(self, sound: Sound) -> None:
+        self.major = np.array(list(sound['major'].values()))
+        self.laryngeal = np.array(list(sound['laryngeal'].values()))
+        self.place = np.array(list(sound['place'].values()))
+    
+    def __str__(self) -> str:
+        major = self.major
+        lary = self.laryngeal
+        place = self.place
+        return f'major: {major},\nlaryngeal: {lary},\nplace: {place}'
